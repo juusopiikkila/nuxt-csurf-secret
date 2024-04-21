@@ -1,0 +1,12 @@
+diff --git a/dist/runtime/server/plugin/csrf.mjs b/dist/runtime/server/plugin/csrf.mjs
+index 3ab09e064ff5944dc61d3eeb6c3e9667c3bd9472..eabff2aa2842d04cd91eb1814997dde11dcead20 100644
+--- a/dist/runtime/server/plugin/csrf.mjs
++++ b/dist/runtime/server/plugin/csrf.mjs
+@@ -14,6 +14,7 @@ export default defineNitroPlugin((nitroApp) => {
+         setCookie(event, cookieKey, secret, csrfConfig.cookie);
+       }
+       event.context.csrfToken = await csrf.create(secret, await useSecretKey(csrfConfig), csrfConfig.encryptAlgorithm);
++      event.context.csrfSecret = secret;
+     });
+     nitroApp.hooks.hook("render:html", async (html, { event }) => {
+       html.head.push(`<meta name="csrf-token" content="${event.context.csrfToken}">`);
